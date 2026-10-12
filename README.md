@@ -56,7 +56,7 @@ The comparison checks stdout, stderr, and the exit code. It deliberately ignores
 
 ## What a recording contains
 
-Each JSON file stores the command, label, start time, duration, exit code, output, the current Git commit when available, and paths Git reports as changed. Files live under `.agent-replay/runs/` in the directory where you ran the command. That directory is ignored by the included `.gitignore`.
+Each JSON file stores the command, label, start time, duration, exit code, output, the current Git commit when available, and the paths Git reports as changed when the recording is saved. Files live under `.agent-replay/runs/` in the directory where you ran the command. That directory is ignored by the included `.gitignore`.
 
 Common GitHub, AWS, bearer, and key-value style secrets are masked in the saved command and output. Redaction is a guardrail, not a guarantee: inspect a recording before sharing it. After the process exits, its captured output is printed back to your terminal.
 
