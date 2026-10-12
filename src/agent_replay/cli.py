@@ -113,13 +113,6 @@ def _list() -> int:
 
 def _show(run_id: str) -> int:
     session = load_session(run_id)
-    if any("[REDACTED" in part for part in session["command"]):
-        print(
-            "The saved command contains a masked argument and cannot be rerun safely. "
-            "Use an environment variable for that secret and record the command again.",
-            file=sys.stderr,
-        )
-        return 2
     print(f"Run:       {session['id']}")
     print(f"Label:     {session.get('label') or '—'}")
     print(f"Started:   {session['started_at']}")
@@ -141,6 +134,13 @@ def _confirm(command: str) -> bool:
 
 def _compare(run_id: str, yes: bool) -> int:
     session = load_session(run_id)
+    if any("[REDACTED" in part for part in session["command"]):
+        print(
+            "The saved command contains a masked argument and cannot be rerun safely. "
+            "Use an environment variable for that secret and record the command again.",
+            file=sys.stderr,
+        )
+        return 2
     if not yes and not _confirm(session["display_command"]):
         print("Comparison cancelled.")
         return 1
